@@ -8,9 +8,14 @@ export const LoginScreen = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const emailRef = useRef<HTMLInputElement>(null);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
+    mountedRef.current = true
     emailRef.current?.focus();
+    return () => {
+      mountedRef.current = false;
+    };
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -20,9 +25,12 @@ export const LoginScreen = () => {
 
     const errorMessage = await signIn(email, password);
 
+    if (!mountedRef.current) return;
     if (errorMessage) {
       setError(errorMessage);
       setIsLoading(false);
+    } else {
+      setIsLoading(false)
     }
     // On success: onAuthStateChange in useAuth fires → ProtectedRoute redirects → component unmounts
   };

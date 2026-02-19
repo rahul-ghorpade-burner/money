@@ -9,7 +9,7 @@ export function useConfig() {
     queryKey: ['config'],
     queryFn: async () => {
       try {
-        return await apiClient.get<UserConfig>('/api/config')
+        return await apiClient.get<UserConfig>('/config')
       } catch (err: unknown) {
         // 404 = no config yet; return null to signal first-time setup
         if (isApiError(err, 404)) return null
@@ -20,7 +20,7 @@ export function useConfig() {
 
   const updateMutation = useMutation({
     mutationFn: (body: { monthly_income: string; savings_percentage: string }) =>
-      apiClient.put<UserConfig>('/api/config', body),
+      apiClient.put<UserConfig>('/config', body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['config'] })
     },

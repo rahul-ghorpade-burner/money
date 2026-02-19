@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router';
 import App from '../App';
 import { LoginScreen } from '../components/LoginScreen';
 import { OnboardingScreen } from '../components/OnboardingScreen';
+import { SettingsScreen } from '../components/SettingsScreen';
 import { useAuth } from '../hooks/useAuth';
 import { useConfig } from '../hooks/useConfig';
 
@@ -74,6 +75,14 @@ export const AppRouter = () => (
     >
       {/* Protected nested routes will go here */}
     </Route>
+    <Route
+      path="/settings"
+      element={
+        <ProtectedRoute>
+          <SettingsScreen />
+        </ProtectedRoute>
+      }
+    />
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>
 );

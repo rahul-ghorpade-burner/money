@@ -18,3 +18,9 @@ export interface Expense {
   expense_date: string;
   created_at: string;
 }
+
+export interface ExpenseCreateBody {
+  amount: string;
+  label?: string;
+  expense_date: string;
+}

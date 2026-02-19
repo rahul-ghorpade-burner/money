@@ -16,3 +16,17 @@ export const configSchema = z.object({
 })
 
 export type ConfigBody = z.infer<typeof configSchema>
+
+// POST /api/expenses request body (frontend copy — maintained separately from backend)
+export const expenseCreateSchema = z.object({
+  amount: z
+    .string()
+    .regex(/^\d+(\.\d{1,2})?$/, 'amount must be a positive numeric string')
+    .refine((v) => parseFloat(v) > 0, 'amount must be greater than 0'),
+  label: z.string().max(200).optional(),
+  expense_date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'expense_date must be YYYY-MM-DD'),
+})
+
+export type ExpenseCreateBodySchema = z.infer<typeof expenseCreateSchema>
